@@ -1,0 +1,68 @@
+<html>
+  <head>
+    <title>Countdown Timer</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin-top: 50px;
+      }
+      h1 {
+        font-size: 2em;
+      }
+      span {
+        font-weight: bold;
+        color:blue;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Current time: <span id="now"></span>
+      <br>Countdown to 1 hour from now: <span id="countdown"></span>
+    </h1>
+    <script type="text/javascript">
+      // This script displays the current time in HH:MM:SS format
+      // It updates the time every second
+
+      function updateTime() {
+        now = Date.now();
+        date = new Date(now);
+        hours = date.getHours();
+        minutes = date.getMinutes();
+        seconds = date.getSeconds();
+
+        document.getElementById('now').textContent = 
+          (hours < 10 ? '0' + hours : hours) + ':' + 
+          (minutes < 10 ? '0' + minutes : minutes) + ':' + 
+          (seconds < 10 ? '0' + seconds : seconds);
+        setTimeout(updateTime, 1000);
+      }
+      updateTime();
+
+      // To make a countdown, I need to have a target time
+      var targetTime = new Date(Date.now() + 3600000); // 1 hour from now
+      function updateCountdown() {
+        var now = new Date();
+        var timeLeft = targetTime - now;
+
+        if (timeLeft <= 0) {
+          document.getElementById('countdown').textContent = "Countdown finished!";
+          return;
+        }
+
+        var hours = Math.floor(timeLeft / 3600000);
+        var minutes = Math.floor((timeLeft % 3600000) / 60000);
+        var seconds = Math.floor((timeLeft % 60000) / 1000);
+
+        document.getElementById('countdown').textContent = 
+          (hours < 10 ? '0' + hours : hours) + ':' + 
+          (minutes < 10 ? '0' + minutes : minutes) + ':' + 
+          (seconds < 10 ? '0' + seconds : seconds);
+        setTimeout(updateCountdown, 1000);
+      }
+      updateCountdown();
+    </script>
+  </body>
+</html>
